@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aesthetic Music Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#667eea,#764ba2,#ff758c);
+}
+
+.player{
+  width:350px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  border-radius:25px;
+  padding:25px;
+  text-align:center;
+  color:#fff;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.player img{
+  width:220px;
+  height:220px;
+  border-radius:20px;
+  object-fit:cover;
+  margin-bottom:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.song-title{
+  font-size:20px;
+  font-weight:600;
+}
+
+.artist{
+  font-size:14px;
+  opacity:0.8;
+  margin-bottom:20px;
+}
+
+.controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:25px;
+}
+
+.controls button{
+  width:60px;
+  height:60px;
+  border:none;
+  border-radius:50%;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:white;
+  font-size:22px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+.controls button:hover{
+  transform:scale(1.15);
+}
+
+.play-btn{
+  width:70px;
+  height:70px;
+  font-size:26px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="player">
+  <img id="index.html" src="flower.jpg" alt="">
+  <div class="song-title" id="title">vazhithunaiye</div>
+  <div class="artist">Tamil Melody</div>
+
+  <div class="controls">
+    <button onclick="prevSong()">⏮</button>
+    <button class="play-btn" onclick="playPause()">▶</button>
+    <button onclick="nextSong()">⏭</button>
+  </div>
+
+  <audio id="audio"></audio>
+</div>
+
+<script>
+const songs = [
+  {
+    title: "vazhithunaiye",
+    src: "song1.mp3",
+    img: "song1.jpg"
+  },
+  {
+    title: "Thangapoovaey",
+    src: "song2.mp3",
+    img: "song2.jpg"
+  },
+  {
+    title: "Paavai",
+    src: "song3.mp3",
+    img: "song3.jpg"
+  }
+];
+
+let index = 0;
+let isPlaying = false;
+
+const audio = document.getElementById("audio");
+const title = document.getElementById("title");
+const cover = document.getElementById("cover");
+const playBtn = document.querySelector(".play-btn");
+
+function loadSong(){
+  audio.src = songs[index].src;
+  title.innerText = songs[index].title;
+  cover.src = songs[index].img;
+}
+
+function playPause(){
+  if(!isPlaying){
+    audio.play();
+    playBtn.innerHTML = "⏸";
+    isPlaying = true;
+  }else{
+    audio.pause();
+    playBtn.innerHTML = "▶";
+    isPlaying = false;
+  }
+}
+
+function nextSong(){
+  index = (index + 1) % songs.length;
+  loadSong();
+  audio.play();
+  playBtn.innerHTML = "⏸";
+  isPlaying = true;
+}
+
+function prevSong(){
+  index = (index - 1 + songs.length) % songs.length;
+  loadSong();
+  audio.play();
+  playBtn.innerHTML = "⏸";
+  isPlaying = true;
+}
+
+loadSong();
+</script>
+
+</body>
+</html>
